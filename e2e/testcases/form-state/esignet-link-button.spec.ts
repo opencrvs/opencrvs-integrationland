@@ -15,7 +15,7 @@ async function authenticateInformantWithESignet(page: Page) {
 }
 
 test.describe
-  .serial('E-Signet LINK_BUTTON inserts and locks informant data', () => {
+  .serial('E-Signet LINK_BUTTON inserts and locks informant data @nightly', () => {
   let page: Page
 
   test.beforeAll(async ({ browser }) => {

@@ -67,7 +67,7 @@ async function fillChildDetails(page: Page) {
   await page.locator('#child____weightAtBirth').fill('2.5')
 }
 
-test.describe('E-Signet PSUT persistence', () => {
+test.describe('E-Signet PSUT persistence @nightly', () => {
   let page: Page
   let token: string
 
