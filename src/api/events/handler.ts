@@ -88,13 +88,7 @@ export async function onBirthActionHandler(
     declaration['mother.name']
 
   if (isMotherAvailable && declaration['mother.verified'] !== 'authenticated') {
-    updatedFields['mother.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['mother.dob'],
-      nid: declaration['mother.nid'],
-      name: declaration['mother.name'],
-      gender: 'female',
-      transactionId: `mother-${event.id}`
-    })
+    updatedFields['mother.verified'] = 'verified' // NOTE: For demo, force verified to be true as Collab doesn't support non E-Signet verification
   }
 
   const isFatherAvailable =
@@ -103,13 +97,7 @@ export async function onBirthActionHandler(
     declaration['father.name']
 
   if (isFatherAvailable && declaration['father.verified'] !== 'authenticated')
-    updatedFields['father.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['father.dob'],
-      nid: declaration['father.nid'],
-      name: declaration['father.name'],
-      gender: 'male',
-      transactionId: `father-${event.id}`
-    })
+    updatedFields['father.verified'] = 'verified' // NOTE: For demo, force verified to be true as Collab doesn't support non E-Signet verification
 
   const isInformantAvailable =
     declaration['informant.dob'] &&
@@ -119,12 +107,7 @@ export async function onBirthActionHandler(
     isInformantAvailable &&
     declaration['informant.verified'] !== 'authenticated'
   )
-    updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['informant.dob'],
-      nid: declaration['informant.nid'],
-      name: declaration['informant.name'],
-      transactionId: `informant-${event.id}`
-    })
+    updatedFields['informant.verified'] = 'verified' // NOTE: For demo, force verified to be true as Collab doesn't support non E-Signet verification
   return h.response({ declaration: updatedFields }).code(200)
 }
 
@@ -296,12 +279,7 @@ export async function onDeathActionHandler(
     isDeceasedAvailable &&
     declaration['deceased.verified'] !== 'authenticated'
   )
-    updatedFields['deceased.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['deceased.dob'],
-      nid: declaration['deceased.nid'],
-      name: declaration['deceased.name'],
-      gender: declaration['deceased.gender']
-    })
+    updatedFields['deceased.verified'] = 'verified' // NOTE: For demo, force verified to be true as Collab doesn't support non E-Signet verification
 
   const isInformantAvailable =
     declaration['informant.dob'] &&
@@ -312,11 +290,7 @@ export async function onDeathActionHandler(
     isInformantAvailable &&
     declaration['informant.verified'] !== 'authenticated'
   )
-    updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['informant.dob'],
-      nid: declaration['informant.nid'],
-      name: declaration['informant.name']
-    })
+    updatedFields['informant.verified'] = 'verified' // NOTE: For demo, force verified to be true as Collab doesn't support non E-Signet verification
 
   const isSpouseAvailable =
     declaration['spouse.dob'] &&
@@ -324,11 +298,7 @@ export async function onDeathActionHandler(
     declaration['spouse.name']
 
   if (isSpouseAvailable && declaration['spouse.verified'] !== 'authenticated')
-    updatedFields['spouse.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['spouse.dob'],
-      nid: declaration['spouse.nid'],
-      name: declaration['spouse.name']
-    })
+    updatedFields['spouse.verified'] = 'verified' // NOTE: For demo, force verified to be true as Collab doesn't support non E-Signet verification
 
   return h.response({ declaration: updatedFields }).code(200)
 }
