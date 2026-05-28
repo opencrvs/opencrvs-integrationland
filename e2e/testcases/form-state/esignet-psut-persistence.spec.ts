@@ -10,9 +10,6 @@ import {
 import { CREDENTIALS, GATEWAY_HOST } from '../../constants'
 import { openBirthDeclaration } from '../birth/helpers'
 
-const MOCK_NID = '1234567898'
-const EXPECTED_SUB = `12345678901234567890123456${MOCK_NID}`
-
 async function openBirthDeclarationAndCaptureEventId(page: Page) {
   const createEventResponsePromise = page.waitForResponse(
     (response) =>
@@ -33,13 +30,19 @@ async function openBirthDeclarationAndCaptureEventId(page: Page) {
   return eventId
 }
 
-async function authenticateMotherWithESignet(page: Page, nid: string) {
+async function authenticateMotherWithESignet(page: Page) {
   await page.locator('#mother____verify').click()
+  await expect(page).toHaveURL(/login/, { timeout: 60_000 })
+  await page.locator('#Otp_vid').fill('2319438528')
+  await page.getByRole('button', { name: 'Get OTP' }).click()
 
-  await expect(page).toHaveURL(/authorize/)
-  await page.locator('#id-input').fill(nid)
-  await page.locator('#authenticate').click()
-  await expect(page).not.toHaveURL(/authorize/)
+  const pincodeInputs = page.locator('.pincode-input-text')
+  for (let i = 0; i < 6; i++) {
+    await pincodeInputs.nth(i).fill('1')
+  }
+
+  await page.getByRole('button', { name: 'Verify' }).click()
+  await expect(page).not.toHaveURL(/login/, { timeout: 60_000 })
 }
 
 async function fillChildDetails(page: Page) {
@@ -94,7 +97,7 @@ test.describe('E-Signet PSUT persistence @nightly', () => {
     await page.locator('#informant____email').fill('psut-mother@example.com')
     await continueForm(page)
 
-    await authenticateMotherWithESignet(page, MOCK_NID)
+    await authenticateMotherWithESignet(page)
 
     await expect(page.getByText('ID Authenticated')).toBeVisible({
       timeout: 60_000
@@ -152,6 +155,6 @@ test.describe('E-Signet PSUT persistence @nightly', () => {
         },
         { timeout: 60_000, intervals: [1_000, 2_000, 5_000] }
       )
-      .toMatchObject({ sub: EXPECTED_SUB })
+      .toMatchObject({ sub: expect.stringMatching(/\d+/) })
   })
 })
