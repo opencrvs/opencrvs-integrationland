@@ -299,16 +299,16 @@ export const birthEvent = defineConfig({
         id: 'event.birth.action.declare.label'
       },
       review: BIRTH_DECLARATION_REVIEW,
-      deduplication: {
-        id: 'birth-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.birth.action.detect-duplicate.label'
-        },
-        query: dedupConfig
-      },
+      // deduplication: {
+      //   id: 'birth-deduplication',
+      //   label: {
+      //     defaultMessage: 'Detect duplicate',
+      //     description:
+      //       'This is shown as the action name anywhere the user can trigger the action from',
+      //     id: 'event.birth.action.detect-duplicate.label'
+      //   },
+      //   query: dedupConfig
+      // },
       flags: [
         {
           id: 'approval-required-for-late-registration',
@@ -891,17 +891,17 @@ export const birthEvent = defineConfig({
             not(flag('escalated-to-registrar-general'))
           )
         }
-      ],
-      deduplication: {
-        id: 'birth-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.birth.action.detect-duplicate.label'
-        },
-        query: dedupConfig
-      }
+      ]
+      // deduplication: {
+      //   id: 'birth-deduplication',
+      //   label: {
+      //     defaultMessage: 'Detect duplicate',
+      //     description:
+      //       'This is shown as the action name anywhere the user can trigger the action from',
+      //     id: 'event.birth.action.detect-duplicate.label'
+      //   },
+      //   query: dedupConfig
+      // }
     },
     {
       type: ActionType.PRINT_CERTIFICATE,

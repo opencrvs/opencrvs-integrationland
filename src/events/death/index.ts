@@ -225,16 +225,16 @@ export const deathEvent = defineConfig({
         id: 'event.death.action.declare.label'
       },
       review: DEATH_DECLARATION_REVIEW,
-      deduplication: {
-        id: 'death-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.death.action.detect-duplicate.label'
-        },
-        query: dedupConfig
-      },
+      // deduplication: {
+      //   id: 'death-deduplication',
+      //   label: {
+      //     defaultMessage: 'Detect duplicate',
+      //     description:
+      //       'This is shown as the action name anywhere the user can trigger the action from',
+      //     id: 'event.death.action.detect-duplicate.label'
+      //   },
+      //   query: dedupConfig
+      // },
       flags: [
         {
           id: 'validated',
@@ -361,17 +361,17 @@ export const deathEvent = defineConfig({
           type: ConditionalType.ENABLE,
           conditional: flag('validated')
         }
-      ],
-      deduplication: {
-        id: 'death-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.death.action.detect-duplicate.label'
-        },
-        query: dedupConfig
-      }
+      ]
+      // deduplication: {
+      //   id: 'death-deduplication',
+      //   label: {
+      //     defaultMessage: 'Detect duplicate',
+      //     description:
+      //       'This is shown as the action name anywhere the user can trigger the action from',
+      //     id: 'event.death.action.detect-duplicate.label'
+      //   },
+      //   query: dedupConfig
+      // }
     },
     {
       type: ActionType.PRINT_CERTIFICATE,
