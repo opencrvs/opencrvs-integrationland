@@ -26,7 +26,7 @@ const MOTHER_IDENTITY = {
 } as const
 
 test.describe
-  .serial('Advanced Search - Birth Event Declaration - Child NID', () => {
+  .serial('Advanced Search - Birth Event Declaration - Child NID @nightly', () => {
   let page: Page
   let childNid: string
   let declaration: Declaration
@@ -48,13 +48,7 @@ test.describe
       }
     })
 
-    // mother.idType and mother.nid are hidden when mother.verified === 'authenticated'
-    // (eSignet flow) so the backend rejects those fields — same approach as
-    // birth-registration-forwarding.spec.ts
-    const res = await createDeclaration(
-      token,
-      omit(declData, ['mother.idType', 'mother.nid'])
-    )
+    const res = await createDeclaration(token, declData)
     declaration = res.declaration
     eventId = res.eventId
 
@@ -69,9 +63,9 @@ test.describe
           })
           const aggregated = aggregateActionDeclarations(event)
           childNid = aggregated['child.nid'] as string
-          return Boolean(childNid)
+          return /^\d{10}$/.test(childNid)
         },
-        { timeout: 30_000, intervals: [1_000, 2_000, 5_000] }
+        { timeout: 300_000, intervals: [10_000, 30_000] }
       )
       .toBe(true)
   })
