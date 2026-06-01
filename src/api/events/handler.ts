@@ -70,7 +70,7 @@ export async function onBirthActionHandler(
   const event = request.payload
   await sendInformantNotification({ event, token })
 
-  const pendingAction = getPendingAction(request.payload.actions)
+  const pendingAction = getPendingAction(event.actions)
 
   if (
     pendingAction.type === ActionType.CUSTOM &&
