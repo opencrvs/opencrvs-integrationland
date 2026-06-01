@@ -71,6 +71,18 @@ export async function onBirthActionHandler(
   await sendInformantNotification({ event, token })
 
   const pendingAction = getPendingAction(event.actions)
+
+  if (
+    pendingAction.type === ActionType.CUSTOM &&
+    pendingAction.customActionType === 'REVOKE_REGISTRATION'
+  ) {
+    console.log(
+      'Country config would call revocation endpoint, but it is not implemented in MOSIP yet'
+    )
+
+    return h.response({ declaration: { 'child.nid': null } }).code(200)
+  }
+
   const declaration = deepMerge(
     aggregateActionDeclarations(event),
     pendingAction.declaration
