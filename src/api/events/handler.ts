@@ -90,49 +90,51 @@ export async function onBirthActionHandler(
 
   const updatedFields: Record<string, 'verified' | 'failed'> = {}
 
-  const isMotherAvailable =
-    declaration['mother.dob'] &&
-    declaration['mother.nid'] &&
-    declaration['mother.name']
+  // const isMotherAvailable =
+  //   declaration['mother.dob'] &&
+  //   declaration['mother.nid'] &&
+  //   declaration['mother.name']
 
-  if (isMotherAvailable && declaration['mother.verified'] !== 'authenticated') {
-    updatedFields['mother.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['mother.dob'],
-      nid: declaration['mother.nid'],
-      name: declaration['mother.name'],
-      gender: 'female',
-      transactionId: `mother-${event.id}`
-    })
-  }
+  // if (isMotherAvailable && declaration['mother.verified'] !== 'authenticated') {
+  //   updatedFields['mother.verified'] = await mosipInteropClient.verifyNid({
+  //     dob: declaration['mother.dob'],
+  //     nid: declaration['mother.nid'],
+  //     name: declaration['mother.name'],
+  //     gender: 'female',
+  //     transactionId: `mother-${event.id}`
+  //   })
+  // }
 
-  const isFatherAvailable =
-    declaration['father.dob'] &&
-    declaration['father.nid'] &&
-    declaration['father.name']
+  // const isFatherAvailable =
+  //   declaration['father.dob'] &&
+  //   declaration['father.nid'] &&
+  //   declaration['father.name']
 
-  if (isFatherAvailable && declaration['father.verified'] !== 'authenticated')
-    updatedFields['father.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['father.dob'],
-      nid: declaration['father.nid'],
-      name: declaration['father.name'],
-      gender: 'male',
-      transactionId: `father-${event.id}`
-    })
+  // if (isFatherAvailable && declaration['father.verified'] !== 'authenticated')
+  //   updatedFields['father.verified'] = await mosipInteropClient.verifyNid({
+  //     dob: declaration['father.dob'],
+  //     nid: declaration['father.nid'],
+  //     name: declaration['father.name'],
+  //     gender: 'male',
+  //     transactionId: `father-${event.id}`
+  //   })
 
-  const isInformantAvailable =
-    declaration['informant.dob'] &&
-    declaration['informant.nid'] &&
-    declaration['informant.name']
-  if (
-    isInformantAvailable &&
-    declaration['informant.verified'] !== 'authenticated'
-  )
-    updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['informant.dob'],
-      nid: declaration['informant.nid'],
-      name: declaration['informant.name'],
-      transactionId: `informant-${event.id}`
-    })
+  // const isInformantAvailable =
+  //   declaration['informant.dob'] &&
+  //   declaration['informant.nid'] &&
+  //   declaration['informant.name']
+
+  // if (
+  //   isInformantAvailable &&
+  //   declaration['informant.verified'] !== 'authenticated'
+  // )
+  //   updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
+  //     dob: declaration['informant.dob'],
+  //     nid: declaration['informant.nid'],
+  //     name: declaration['informant.name'],
+  //     transactionId: `informant-${event.id}`
+  //   })
+
   return h.response({ declaration: updatedFields }).code(200)
 }
 
@@ -354,48 +356,48 @@ export async function onDeathActionHandler(
 
   const updatedFields: Record<string, 'verified' | 'failed'> = {}
 
-  const isDeceasedAvailable =
-    declaration['deceased.dob'] &&
-    declaration['deceased.nid'] &&
-    declaration['deceased.name']
+  // const isDeceasedAvailable =
+  //   declaration['deceased.dob'] &&
+  //   declaration['deceased.nid'] &&
+  //   declaration['deceased.name']
 
-  if (
-    isDeceasedAvailable &&
-    declaration['deceased.verified'] !== 'authenticated'
-  )
-    updatedFields['deceased.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['deceased.dob'],
-      nid: declaration['deceased.nid'],
-      name: declaration['deceased.name'],
-      gender: declaration['deceased.gender']
-    })
+  // if (
+  //   isDeceasedAvailable &&
+  //   declaration['deceased.verified'] !== 'authenticated'
+  // )
+  //   updatedFields['deceased.verified'] = await mosipInteropClient.verifyNid({
+  //     dob: declaration['deceased.dob'],
+  //     nid: declaration['deceased.nid'],
+  //     name: declaration['deceased.name'],
+  //     gender: declaration['deceased.gender']
+  //   })
 
-  const isInformantAvailable =
-    declaration['informant.dob'] &&
-    declaration['informant.nid'] &&
-    declaration['informant.name']
+  // const isInformantAvailable =
+  //   declaration['informant.dob'] &&
+  //   declaration['informant.nid'] &&
+  //   declaration['informant.name']
 
-  if (
-    isInformantAvailable &&
-    declaration['informant.verified'] !== 'authenticated'
-  )
-    updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['informant.dob'],
-      nid: declaration['informant.nid'],
-      name: declaration['informant.name']
-    })
+  // if (
+  //   isInformantAvailable &&
+  //   declaration['informant.verified'] !== 'authenticated'
+  // )
+  //   updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
+  //     dob: declaration['informant.dob'],
+  //     nid: declaration['informant.nid'],
+  //     name: declaration['informant.name']
+  //   })
 
-  const isSpouseAvailable =
-    declaration['spouse.dob'] &&
-    declaration['spouse.nid'] &&
-    declaration['spouse.name']
+  // const isSpouseAvailable =
+  //   declaration['spouse.dob'] &&
+  //   declaration['spouse.nid'] &&
+  //   declaration['spouse.name']
 
-  if (isSpouseAvailable && declaration['spouse.verified'] !== 'authenticated')
-    updatedFields['spouse.verified'] = await mosipInteropClient.verifyNid({
-      dob: declaration['spouse.dob'],
-      nid: declaration['spouse.nid'],
-      name: declaration['spouse.name']
-    })
+  // if (isSpouseAvailable && declaration['spouse.verified'] !== 'authenticated')
+  //   updatedFields['spouse.verified'] = await mosipInteropClient.verifyNid({
+  //     dob: declaration['spouse.dob'],
+  //     nid: declaration['spouse.nid'],
+  //     name: declaration['spouse.name']
+  //   })
 
   return h.response({ declaration: updatedFields }).code(200)
 }
