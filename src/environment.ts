@@ -64,11 +64,6 @@ export const env = cleanEnv(process.env, {
     devDefault: 'http://localhost:3040/_demo-issuer/raw/jwt/sign',
     desc: 'URL for signing raw JWTs for verifiable credentials issuance'
   }),
-  NO_MOSIP: bool({
-    devDefault: true,
-    default: false,
-    desc: 'Used in local development to disable MOSIP registration dependency'
-  }),
   REFERENCE_DATA_DATABASE_URL: url({
     devDefault:
       'postgres://events_reference_data:reference_data_password@localhost:5432/events',

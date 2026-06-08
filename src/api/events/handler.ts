@@ -22,7 +22,7 @@ import {
   RegisterAction,
   NameFieldValue
 } from '@opencrvs/toolkit/events'
-import { MOSIP_INTEROP_URL, NO_MOSIP } from '@countryconfig/constants'
+import { MOSIP_INTEROP_URL } from '@countryconfig/constants'
 import {
   getBirthInformantSection,
   getInformantPsut,
@@ -61,11 +61,6 @@ export async function onBirthActionHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
-  // Used in local development to disable MOSIP registration dependency
-  if (NO_MOSIP) {
-    return h.response({}).code(200)
-  }
-
   const token = request.auth.artifacts.token as string
   const event = request.payload
   await sendInformantNotification({ event, token })
@@ -137,11 +132,6 @@ export async function onBirthCorrectionActionHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
-  // Used in local development to disable MOSIP registration dependency
-  if (NO_MOSIP) {
-    return h.response({}).code(200)
-  }
-
   const token = request.auth.artifacts.token as string
   const event = request.payload
   await sendInformantNotification({ event, token })
@@ -330,11 +320,6 @@ export async function onDeathActionHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
-  // Used in local development to disable MOSIP registration dependency
-  if (NO_MOSIP) {
-    return h.response({}).code(200)
-  }
-
   const token = request.auth.artifacts.token as string
   const event = request.payload
   await sendInformantNotification({ event, token })
