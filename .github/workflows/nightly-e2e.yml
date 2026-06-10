@@ -1,5 +1,5 @@
 name: Nightly E2E
-run-name: Nightly E2E — ${{ github.run_id }}
+run-name: Nightly E2E (commit ${{ github.sha }})
 on:
   schedule:
     - cron: '0 0 * * *'
