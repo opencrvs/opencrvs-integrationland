@@ -64,7 +64,7 @@ jobs:
         if: failure()
         uses: slackapi/slack-github-action@v1.26.0
         with:
-          channel-id: 'C0B6SJKF997'
+          channel-id: 'C0B9GLNQEF8'
           slack-message: '❌ Nightly eSignet E2E tests failed. Check the logs at https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}.'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
