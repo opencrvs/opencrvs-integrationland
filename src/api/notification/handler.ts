@@ -11,7 +11,11 @@
 import { logger, maskEmail, maskSms } from '@countryconfig/logger'
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
-import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
+import {
+  ANALYTICS_SLACK_EMAIL,
+  COUNTRY_LOGO_URL,
+  SENDER_EMAIL_ADDRESS
+} from './constant'
 import { sendEmail } from './email-service'
 import { InformantTemplateType, getSMSTemplate, sendSMS } from './sms-service'
 import {
@@ -170,6 +174,21 @@ export async function notify({
         `Sending email to ${email} with subject: ${subject}, body: ${JSON.stringify(emailBody)}`
       )
       return
+    }
+
+    /* Notify everything to Slack from Ilanga District Office */
+    if ((variable as any).crvsOffice === 'Ilanga District Office') {
+      console.log(
+        'Sending email to analytics Slack channel due to crvsOffice being Ilanga District Office'
+      )
+
+      await sendEmail({
+        subject,
+        html: emailBody,
+        from: SENDER_EMAIL_ADDRESS,
+        to: ANALYTICS_SLACK_EMAIL,
+        bcc
+      })
     }
 
     await sendEmail({
