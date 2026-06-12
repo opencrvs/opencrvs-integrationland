@@ -1,0 +1,23 @@
+name: Test Slack Notification
+run-name: Test Slack Notification (${{ github.ref_name }})
+on:
+  workflow_dispatch:
+
+jobs:
+  test-slack:
+    name: Test Slack notification
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Notify Slack (test success)
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: 'C0B9GLNQEF8'
+          slack-message: '✅ Test Slack notification from ${{ github.repository }} (commit ${{ github.sha }}). This is a test message to verify the Slack integration works.'
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Force failure for testing
+        if: false
+        run: exit 1
