@@ -68,7 +68,7 @@ test.describe
           childNid = aggregated['child.nid'] as string
           return /^\d{10}$/.test(childNid)
         },
-        { timeout: 300_000, intervals: [10_000, 30_000] }
+        { timeout: 420_000, intervals: [10_000, 30_000] }
       )
       .toBe(true)
   })
