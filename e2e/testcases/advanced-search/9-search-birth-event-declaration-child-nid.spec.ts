@@ -13,7 +13,7 @@ import { assertTexts, ensureAssignedToUser, type } from '../../utils'
 import { formatV2ChildName } from '../birth/helpers'
 
 // Accounts for MOSIP delays
-test.setTimeout(400_000)
+test.setTimeout(600_000)
 
 /*
  * Female identity from mock-identities.json (Sahara Wendy Moyo, NID: 1234567899).
