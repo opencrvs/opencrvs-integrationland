@@ -1,7 +1,7 @@
 import { Page, expect, test } from '@playwright/test'
 import { goToSection, login } from '../../helpers'
 import { openBirthDeclaration } from '../birth/helpers'
-import { openOTPListener } from '../../smtp-websocket'
+import { openOTPListener, requestOTP } from '../../smtp-websocket'
 
 async function authenticateInformantWithESignet(page: Page) {
   await page.locator('#informant____verify').click()
@@ -9,9 +9,8 @@ async function authenticateInformantWithESignet(page: Page) {
   await expect(page).toHaveURL(/login/, { timeout: 60_000 })
   await page.locator('#Otp_vid').fill('5614716359')
 
-  const waitForOTP = openOTPListener()
-  await page.waitForTimeout(3000)
-  await page.getByRole('button', { name: 'Get OTP' }).click()
+  const waitForOTP = await openOTPListener()
+  await requestOTP(page)
   const otp = await waitForOTP()
 
   const pincodeInputs = page.locator('.pincode-input-text')
