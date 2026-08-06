@@ -9,6 +9,7 @@ import {
 } from '../../helpers'
 import { CREDENTIALS, GATEWAY_HOST } from '../../constants'
 import { openBirthDeclaration } from '../birth/helpers'
+import { openOTPListener, requestOTP } from '../../smtp-websocket'
 
 async function openBirthDeclarationAndCaptureEventId(page: Page) {
   const createEventResponsePromise = page.waitForResponse(
@@ -33,12 +34,13 @@ async function openBirthDeclarationAndCaptureEventId(page: Page) {
 async function authenticateMotherWithESignet(page: Page) {
   await page.locator('#mother____verify').click()
   await expect(page).toHaveURL(/login/, { timeout: 60_000 })
-  await page.locator('#Otp_vid').fill('2319438528')
-  await page.getByRole('button', { name: 'Get OTP' }).click()
-
+  await page.locator('#Otp_vid').fill('5614716359')
+  const waitForOTP = await openOTPListener()
+  await requestOTP(page)
+  const otp = await waitForOTP()
   const pincodeInputs = page.locator('.pincode-input-text')
   for (let i = 0; i < 6; i++) {
-    await pincodeInputs.nth(i).fill('1')
+    await pincodeInputs.nth(i).fill(otp[i])
   }
 
   await page.getByRole('button', { name: 'Verify' }).click()

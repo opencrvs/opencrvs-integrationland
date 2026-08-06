@@ -1,17 +1,21 @@
 import { Page, expect, test } from '@playwright/test'
 import { goToSection, login } from '../../helpers'
 import { openBirthDeclaration } from '../birth/helpers'
+import { openOTPListener, requestOTP } from '../../smtp-websocket'
 
 async function authenticateInformantWithESignet(page: Page) {
   await page.locator('#informant____verify').click()
 
   await expect(page).toHaveURL(/login/, { timeout: 60_000 })
-  await page.locator('#Otp_vid').fill('2186715839')
-  await page.getByRole('button', { name: 'Get OTP' }).click()
+  await page.locator('#Otp_vid').fill('5614716359')
+
+  const waitForOTP = await openOTPListener()
+  await requestOTP(page)
+  const otp = await waitForOTP()
 
   const pincodeInputs = page.locator('.pincode-input-text')
   for (let i = 0; i < 6; i++) {
-    await pincodeInputs.nth(i).fill('1')
+    await pincodeInputs.nth(i).fill(otp[i])
   }
 
   await page.getByRole('button', { name: 'Verify' }).click()
@@ -47,21 +51,21 @@ test.describe
       timeout: 60_000
     })
 
-    await expect(page.locator('#firstname')).toHaveValue('Rachik')
-    await expect(page.locator('#surname')).toHaveValue('Sharma')
+    await expect(page.locator('#firstname')).toHaveValue('Emily')
+    await expect(page.locator('#surname')).toHaveValue('Carter')
     await expect(page.locator('#firstname')).toBeDisabled()
     await expect(page.locator('#surname')).toBeDisabled()
 
-    await expect(page.locator('#informant____dob-dd')).toHaveValue('06')
-    await expect(page.locator('#informant____dob-mm')).toHaveValue('06')
-    await expect(page.locator('#informant____dob-yyyy')).toHaveValue('2000')
+    await expect(page.locator('#informant____dob-dd')).toHaveValue('09')
+    await expect(page.locator('#informant____dob-mm')).toHaveValue('12')
+    await expect(page.locator('#informant____dob-yyyy')).toHaveValue('1990')
 
     await expect(page.locator('#informant____dob-dd')).toBeDisabled()
     await expect(page.locator('#informant____dob-mm')).toBeDisabled()
     await expect(page.locator('#informant____dob-yyyy')).toBeDisabled()
 
     await expect(page.locator('#informant____nid')).toBeDisabled()
-    await expect(page.locator('#informant____nid')).toHaveValue('2186715839')
+    await expect(page.locator('#informant____nid')).toHaveValue('5614716359')
   })
 
   test.skip('Handle surnames with spaces', async () => {})

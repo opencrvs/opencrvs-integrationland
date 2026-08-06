@@ -12,8 +12,13 @@ import { CREDENTIALS, GATEWAY_HOST } from '../../constants'
 import { assertTexts, ensureAssignedToUser, type } from '../../utils'
 import { formatV2ChildName } from '../birth/helpers'
 
-// Accounts for MOSIP delays
-test.setTimeout(600_000)
+/*
+ * MOSIP takes ~5min to issue the credential that carries child.nid, and has
+ * been slower at times. The waiting happens in beforeAll, whose timeout is
+ * *not* affected by a file-scope test.setTimeout — it has to be set from
+ * inside the hook, which is what NID_WAIT_TIMEOUT below is for.
+ */
+const NID_WAIT_TIMEOUT = 600_000
 
 /*
  * Female identity from mock-identities.json (Sahara Wendy Moyo, NID: 1234567899).
@@ -36,6 +41,7 @@ test.describe
   let eventId: string
 
   test.beforeAll(async ({ browser }) => {
+    test.setTimeout(NID_WAIT_TIMEOUT + 60_000)
     page = await browser.newPage()
     const token = await getToken(CREDENTIALS.REGISTRAR)
 
@@ -68,7 +74,7 @@ test.describe
           childNid = aggregated['child.nid'] as string
           return /^\d{10}$/.test(childNid)
         },
-        { timeout: 420_000, intervals: [10_000, 30_000] }
+        { timeout: NID_WAIT_TIMEOUT, intervals: [10_000, 30_000] }
       )
       .toBe(true)
   })
